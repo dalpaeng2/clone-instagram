@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import Logout from '@/app/component/logout';
@@ -127,7 +128,7 @@ function Post({ post }: PostProps) {
         </div>
         <div>...</div>
       </div>
-      <Image src={post?.photo_url} alt="" className="w-full" />
+      <img src={post?.photo_url} alt="" className="w-full" />
       <div className="flex gap-3 text-lg">
         <FaRegHeart />
         <FaRegComment />
