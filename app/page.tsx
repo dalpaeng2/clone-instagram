@@ -3,6 +3,13 @@ import { cookies } from 'next/headers';
 import Logout from '@/app/component/logout';
 import Login from './login/page';
 import Link from 'next/link';
+import { RiHomeSmileLine } from 'react-icons/ri';
+import { IoSearchOutline } from 'react-icons/io5';
+import { FiPlusSquare } from 'react-icons/fi';
+import { IoIosLogOut } from 'react-icons/io';
+import { RxAvatar } from 'react-icons/rx';
+import { FaRegHeart } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -19,123 +26,121 @@ export default async function Home() {
     }
   );
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // const {
+  //   data: { session },
+  // } = await supabase.auth.getSession();
+
+  const { data: posts, error } = await supabase.from('posts').select(`
+      id,
+      content,
+      created_at,
+      photo_url,
+      profiles(email)`);
+
+  // ! TODO: handle error
 
   return (
     <div className="flex">
       <div className="h-dvh fixed top-0 w-60 border-r border-slate-400">
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col p-2 justify-between h-full">
           <div className="flex flex-col">
             <div className="text-lg p-2 mb-4">Instagram</div>
-            <div>
+            <div className="flex flex-col justify-between">
               <div className="p-2">
-                <div className="flex justify-left gap-2 items-center">
-                  <div className="bg-gray-400 w-6 h-6 rounded-full"></div>
-                  <div>
-                    <Link href="/">홈</Link>
+                <Link href="/">
+                  <div className="flex justify-left gap-2 items-center">
+                    <RiHomeSmileLine className="" />
+                    <div className="">홈</div>
                   </div>
-                </div>
+                </Link>
               </div>
               <div className="p-2">
-                <div className="flex justify-left gap-2 items-center">
-                  <div className="bg-gray-400 w-6 h-6 rounded-full"></div>
-                  <div>검색</div>
-                </div>
+                <Link href="/">
+                  <div className="flex justify-left gap-2 items-center">
+                    <IoSearchOutline className="" />
+                    <div className="">검색</div>
+                  </div>
+                </Link>
               </div>
               <div className="p-2">
-                <div className="flex justify-left gap-2 items-center">
-                  <div className="bg-gray-400 w-6 h-6 rounded-full"></div>
-                  <div>만들기</div>
-                </div>
+                <Link href="/">
+                  <div className="flex justify-left gap-2 items-center">
+                    <FiPlusSquare className="" />
+                    <div className="">만들기</div>
+                  </div>
+                </Link>
               </div>
               <div className="p-2">
-                <div className="flex justify-left gap-2 items-center">
-                  <div className="bg-gray-400 w-6 h-6 rounded-full"></div>
-                  <div>프로필</div>
-                </div>
+                <Link href="/">
+                  <div className="flex justify-left gap-2 items-center">
+                    <RxAvatar className="" />
+                    <div className="">프로필</div>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
           <div className="p-2">
-            <div className="flex justify-left gap-2 items-center">
-              <div className="bg-gray-400 w-6 h-6 rounded-full"></div>
-              <Logout />
-            </div>
+            <Link href="/">
+              <div className="flex justify-left gap-2 items-center">
+                <IoIosLogOut className="" />
+                <Logout />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
       <div className="flex w-full ml-60">
         <div className="w-[600px] flex flex-col gap-4 items-center pt-3">
           <div className="w-[500px] flex flex-col gap-1 border-b">
-            <div className="flex justify-between items-center p-2">
-              <div className="flex items-center gap-2">
-                <div className="bg-blue-200 w-6 h-6 rounded-full"></div>
-                <div className="text-sm">유저 1</div>
-                <div className="text-xs text-slate-600">1일</div>
-              </div>
-              <div>...</div>
-            </div>
-            <div className="bg-slate-400 w-full h-[400px]"></div>
-            <div className="flex gap-3">
-              <div>하트</div>
-              <div>댓글</div>
-            </div>
-            <div className="text-sm">좋아요 100개</div>
-            <div>유저 1 - 내용</div>
-            <div className="text-sm text-slate-600">댓글 100개 모두 보기</div>
-            <div className="text-sm text-slate-600">댓글 달기</div>
-          </div>
-          <div className="w-[500px] flex flex-col gap-1 border-b">
-            <div className="flex justify-between items-center p-2">
-              <div className="flex items-center gap-2">
-                <div className="bg-blue-200 w-6 h-6 rounded-full"></div>
-                <div className="text-sm">유저 1</div>
-                <div className="text-xs text-slate-600">1일</div>
-              </div>
-              <div>...</div>
-            </div>
-            <div className="bg-slate-400 w-full h-[400px]"></div>
-            <div className="flex gap-3">
-              <div>하트</div>
-              <div>댓글</div>
-            </div>
-            <div className="text-sm">좋아요 100개</div>
-            <div>유저 1 - 내용</div>
-            <div className="text-sm text-slate-600">댓글 100개 모두 보기</div>
-            <div className="text-sm text-slate-600">댓글 달기</div>
-          </div>
-        </div>
-        <div className="w-60">
-          <div>
-            <div className="py-3">회원님을 위한 추천</div>
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-1 justify-start items-center">
-                  <div className="bg-slate-500 rounded-full w-8 h-8"></div>
-                  <div>회원 1</div>
-                </div>
-                <div className="text-blue-500">팔로우</div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex gap-1 justify-start items-center">
-                  <div className="bg-slate-500 rounded-full w-8 h-8"></div>
-                  <div>회원 2</div>
-                </div>
-                <div className="text-blue-500">팔로우</div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex gap-1 justify-start items-center">
-                  <div className="bg-slate-500 rounded-full w-8 h-8"></div>
-                  <div>회원 3</div>
-                </div>
-                <div className="text-blue-500">팔로우</div>
-              </div>
-            </div>
+            {posts?.map((post) => (
+              <Post key={post.id} post={post} />
+            ))}
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+type PostProps = {
+  post: {
+    id: string;
+    content: string;
+    created_at: string;
+    photo_url: string;
+    profiles: {
+      email: string;
+    };
+  };
+};
+
+function Post({ post }: PostProps) {
+  return (
+    <>
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-200 w-6 h-6 rounded-full"></div>
+          <div className="text-sm">{post?.profiles.email}</div>
+          <div className="text-xs text-slate-600">1일</div>
+        </div>
+        <div>...</div>
+      </div>
+      <img src={post?.photo_url} alt="" className="w-full" />
+      <div className="flex gap-3 text-lg">
+        <FaRegHeart />
+        <FaRegComment />
+      </div>
+      <div className="text-sm">좋아요 100개</div>
+      <div>
+        {post?.profiles.email} - {post?.content}
+      </div>
+      <div className="text-sm text-slate-600">댓글 100개 모두 보기</div>
+      <input
+        type="text"
+        className="text-sm border-b-1 border-slate-400 w-full p-2"
+        placeholder="댓글 달기..."
+      />
+    </>
   );
 }
