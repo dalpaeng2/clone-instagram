@@ -28,18 +28,12 @@ export default async function Home() {
     }
   );
 
-  // const {
-  //   data: { session },
-  // } = await supabase.auth.getSession();
-
   const { data: posts, error } = await supabase.from('posts').select(`
       id,
       content,
       created_at,
       photo_url,
       profiles(email)`);
-
-  // ! TODO: handle error
 
   return (
     <div className="flex">
@@ -65,7 +59,7 @@ export default async function Home() {
                 </Link>
               </div>
               <div className="p-2">
-                <Link href="/">
+                <Link href="/create-post">
                   <div className="flex justify-left gap-2 items-center">
                     <FiPlusSquare className="" />
                     <div className="">만들기</div>
@@ -117,7 +111,25 @@ type PostProps = {
   };
 };
 
-function Post({ post }: PostProps) {
+async function Post({ post }: PostProps) {
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+      },
+    }
+  );
+
+  const {
+    data: { publicUrl: photoUrl },
+  } = await supabase.storage.from('photo').getPublicUrl(post?.photo_url);
+
   return (
     <>
       <div className="flex justify-between items-center mb-2">
@@ -128,7 +140,7 @@ function Post({ post }: PostProps) {
         </div>
         <div>...</div>
       </div>
-      <img src={post?.photo_url} alt="" className="w-full" />
+      <img src={photoUrl} alt="" className="w-full" />
       <div className="flex gap-3 text-lg">
         <FaRegHeart />
         <FaRegComment />
