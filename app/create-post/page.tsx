@@ -62,20 +62,23 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="pt-4 w-1/3 mx-auto">
-      <p>Post 만들기</p>
+    <div className="w-1/3">
+      <p className="text-lg mb-4">Post 만들기</p>
       <form
-        className="flex flex-col gap-1 border-gray-100"
+        className="flex flex-col gap-2 border-gray-100"
         onSubmit={handleSubmit}
       >
         <textarea
           placeholder="content"
-          className="border-1 border-red-200 p-2 rounded-lg"
+          className="border-2 border-slate-400 p-2 rounded-lg"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
         <input type="file" onChange={(e) => setFile(e.target.files?.[0])} />
-        <button className="bg-blue-400 text-slate-600 rounded-lg" type="submit">
+        <button
+          className="bg-blue-400 text-slate-800 rounded-lg py-2"
+          type="submit"
+        >
           Create Post
         </button>
       </form>
