@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import NavBar from '@/app/component/NavBar';
+import { supabaseServer } from '@/lib/supabase/server';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -10,16 +11,22 @@ export const metadata: Metadata = {
   description: 'Cloning Instagram with Next.js and Supabase',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = supabaseServer();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
-        <div className="ml-60 pt-6 pl-8">{children}</div>
+        {/* <NavBar /> */}
+        <div className="">{children}</div>
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 'use client';
 
-import { createBrowserClient } from '@supabase/ssr';
-import { User } from '@supabase/supabase-js';
+import { supabaseBrowser } from '@/lib/supabase/browser';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
@@ -12,10 +11,7 @@ export default function CreatePost() {
 
   const router = useRouter();
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = supabaseBrowser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

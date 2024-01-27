@@ -59,7 +59,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
   return NextResponse.next();
@@ -67,6 +67,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|login|logout|signup).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|auth/login|auth/signup).*)',
   ],
 };
