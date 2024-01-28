@@ -13,8 +13,8 @@ export default async function Home() {
 
   return (
     <div className="flex w-full">
-      <div className="w-[600px] flex flex-col gap-4 items-center pt-3">
-        <div className="w-[500px] flex flex-col gap-1 border-b">
+      <div className="sm:w-[600px] flex flex-col gap-4 items-center pt-3">
+        <div className="sm:w-[500px] flex flex-col gap-1 border-b">
           {posts?.map((post) => (
             <Post key={post.id} post={post} />
           ))}
