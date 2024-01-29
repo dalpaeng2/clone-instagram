@@ -1,8 +1,8 @@
 'use client';
 import { supabaseBrowser } from '@/lib/supabase/browser';
-import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { IoIosLogOut } from 'react-icons/io';
 
 function Logout() {
   const router = useRouter();
@@ -13,7 +13,15 @@ function Logout() {
     router.refresh();
   };
 
-  return <button onClick={handleLogout}>로그아웃</button>;
+  return (
+    <button
+      onClick={handleLogout}
+      className="flex justify-between items-center gap-2"
+    >
+      <IoIosLogOut className="text-3xl" />
+      <span className="hidden sm:block">로그아웃</span>
+    </button>
+  );
 }
 
 export default Logout;
