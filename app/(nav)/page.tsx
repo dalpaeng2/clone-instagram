@@ -4,12 +4,17 @@ import { supabaseServer } from '@/lib/supabase/server';
 export default async function Home() {
   const supabase = supabaseServer();
 
-  const { data: posts, error } = await supabase.from('posts').select(`
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select(
+      `
       id,
       content,
       created_at,
       photo_url,
-      profiles(email)`);
+      profiles(email)`
+    )
+    .order('created_at', { ascending: false });
 
   return (
     <div className="flex w-full">
